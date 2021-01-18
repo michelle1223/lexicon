@@ -10,6 +10,10 @@ encType = input("Enter the encoding type of train & test files: ")
 train = pd.read_csv(train_name, encoding=encType)
 test = pd.read_csv(test_name, encoding=encType)
 
+# WARNING: train data must have the following columns; ['id', 'date', 'media', 'title', 'comment_cnt', 'like_cnt', 'similarity_score',
+# 'body', 'sentence', 'tagging', 'body_preproc', 'sent_preproc', 'posneg_traintest', 'prospect_traintest']
+# test data columns: 
+
 # make positive word dictionary
 tag1 = train[train['tagging']==1]['body_preproc']
 posList = [t.split() for t in tag1]
@@ -45,9 +49,8 @@ def sentWeight(Sentence):
             continue
     return weight
 
-# make result dataframe with score column
+# make result dataframe with weekly lexicon score column
 test['score'] = test['sent_preproc'].apply(sentWeight)
 grouped = test.groupby(['week', 'news_id']).mean()
 weekly = grouped.groupby('week').mean()
-result = weekly.drop(['section', 'news_seq', 'sent_seq', 'sim_score', 'pros_tagging'], axis=1)
-result.to_csv('lexicon_score.csv')
+weekly.to_csv('lexicon_score.csv')

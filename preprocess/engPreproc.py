@@ -1,15 +1,18 @@
 import pandas as pd
 import re
 import nltk
+nltk.download('punkt')
+nltk.download('wordnet')
+nltk.download('stopwords')
 from nltk.tokenize import word_tokenize
 from nltk.stem import WordNetLemmatizer
 from nltk.stem import PorterStemmer
 from nltk.stem import LancasterStemmer
-from nltk.corpus import stopwords 
+from nltk.corpus import stopwords
+
 stop_words = set(stopwords.words('english')) 
-nltk.download('punkt')
-nltk.download('wordnet')
-nltk.download('stopwords')
+n = WordNetLemmatizer()
+s = PorterStemmer()  # 초기 설정: stopwords, lemmatizer, stemmer 설정 필요!
 
 def cleanText(readData):
     #텍스트에 포함되어 있는 특수 문자 제거 (단, $, % 제외)
@@ -24,10 +27,6 @@ def listToString(l):
     str1 = " " 
     # return string   
     return (str1.join(l))
-    
-# 초기 설정: stopwords, lemmatizer, stemmer 설정 필요!
-n = WordNetLemmatizer()
-s = PorterStemmer()
 
 def textPreproc(text):
     temp = cleanText(text)

@@ -10,9 +10,11 @@ encType = input("Enter the encoding type of train & test files: ")
 train = pd.read_csv(train_name, encoding=encType)
 test = pd.read_csv(test_name, encoding=encType)
 
-# WARNING: train data must have the following columns; ['id', 'date', 'media', 'title', 'comment_cnt', 'like_cnt', 'similarity_score',
-# 'body', 'sentence', 'tagging', 'body_preproc', 'sent_preproc', 'posneg_traintest', 'prospect_traintest']
-# test data columns: 
+# WARNING: train data must have the following columns; ['tagging', 'body_preproc', 'sent_preproc']
+# 'tagging' shows whether the text is neutral/positive/negative
+# 'body_preproc' and 'sent_preproc' are the preprocessed body/sentence text data of the train data
+# test data must have the following columns: ['sent_preproc', 'week', 'news_id']
+# 'sent_preproc' has the same meaning as the one in train data; 'week' shows the week number of the text
 
 # make positive word dictionary
 tag1 = train[train['tagging']==1]['body_preproc']
